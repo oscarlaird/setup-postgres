@@ -51,11 +51,14 @@ function updateHba(dir) {
   const contents = `
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             postgres                                peer
-local   all             all                                     peer
-host    all             $USER           127.0.0.1/32            trust
-host    all             $USER           ::1/128                 trust
-host    all             all             127.0.0.1/32            md5
-host    all             all             ::1/128                 md5
+# local   all             all                                     trust
+# host    all             all           127.0.0.1/32              trust
+# $USER might be undefined when running with act!
+# local   all             all                                     peer
+# host    all             $USER           127.0.0.1/32            trust
+# host    all             $USER           ::1/128                 trust
+# host    all             all             127.0.0.1/32            md5
+# host    all             all             ::1/128                 md5
 `
   execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
 }
@@ -140,7 +143,7 @@ if (isMac()) {
   run(`sudo pg_ctlcluster ${postgresVersion} main start`);
 
   // add user
-  run(`sudo -iu postgres createuser -s $USER`);
+  // run(`sudo -iu postgres createuser -s $USER`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 }
