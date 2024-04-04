@@ -51,8 +51,8 @@ function updateHba(dir) {
   const contents = `
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             postgres                                peer
-# local   all             all                                     trust
-# host    all             all           127.0.0.1/32              trust
+local   all             all                                     trust
+host    all             all           127.0.0.1/32              trust
 # $USER might be undefined when running with act!
 # local   all             all                                     peer
 # host    all             $USER           127.0.0.1/32            trust
