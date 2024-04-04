@@ -135,7 +135,9 @@ if (isMac()) {
   updateHba(dataDir);
 
   // start
-  run(`sudo systemctl start postgresql@${postgresVersion}-main`);
+  // run(`sudo systemctl start postgresql@${postgresVersion}-main`);
+  // start with pg_ctl (don't use systemctl)
+  run(`sudo pg_ctlcluster ${postgresVersion} main start`);
 
   // add user
   run(`sudo -iu postgres createuser -s $USER`);
